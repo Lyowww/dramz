@@ -229,7 +229,7 @@ export default function ProfilePage() {
             )}
           </div>
 
-          <div className="mt-6 flex items-center justify-center gap-8 relative">
+          <div className="mt-6 px-8 flex items-center justify-center gap-8 relative">
             <button
               onClick={() => setSelectedTab('crown')}
               className="flex flex-col items-center gap-1"

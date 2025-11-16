@@ -20,8 +20,10 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: url("/bg-pages.png") no-repeat center center;
+  background-size: cover;
+  background-position: top;
+  color: #fff;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -47,7 +49,7 @@ body {
 }
 
 .safe-top {
-  padding-top: env(safe-area-inset-top);
+  padding-top: 54px;
 }
 
 .safe-bottom {
@@ -55,7 +57,9 @@ body {
 }
 
 .bg-app {
-  background: radial-gradient(120% 120% at 50% 0%, #201547 0%, #0f0b1d 60%);
+  background: url("/bg-pages.png") no-repeat center center;
+  background-size: cover;
+  background-position: top;
   color: #fff;
 }
 
@@ -67,4 +71,32 @@ body {
 .card {
   background: #141026;
   border: 1px solid #261f3f;
+}
+
+@keyframes updown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.animate-updown {
+  animation: updown 1.5s ease-in-out infinite;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-in-out;
 }

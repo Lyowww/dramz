@@ -37,7 +37,6 @@ export default async function RootLayout({
   const cookieStore = cookies()
   const tgCookie = (await cookieStore).get('tgUser') || null
   const initialUser = tgCookie ? JSON.parse(tgCookie.value) : null
-  // const initialUser = null
   return (
     <html lang="en">
       <body

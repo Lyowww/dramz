@@ -16,7 +16,7 @@ export default function Header() {
   const showBackButton = !isHome
 
   return (
-    <header className="safe-top px-4 pt-4 flex items-center justify-between z-50 fixed top-0 left-0 right-0 w-full bg-[#0f0b1d] app-frame">
+    <header className="safe-top px-4 pt-4 flex items-center justify-between z-50 fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[480px]">
       <button 
         onClick={() => router.back()} 
         className="w-9 h-9 flex items-center justify-center"

@@ -1,12 +1,14 @@
 'use client'
 
 import Modal from './Modal'
+import PayButton from './PayButton'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../state/store'
 import { closeModal } from '../state/slices/ui'
 import { useMemo, useState } from 'react'
 import { useCrownExchangeRate } from '@/hooks/useCrownExchangeRate'
 import { useSeriesEpisodes } from '@/hooks/useSeriesEpisodes'
+import CrownIcon from './CrownIcon'
 
 export default function PurchaseModal() {
   const open = useSelector((s: RootState) => s.ui.modal === 'purchase')
@@ -55,7 +57,7 @@ export default function PurchaseModal() {
             <div className="rounded-xl card px-3 py-3">
               <div className="text-xs text-white/60 flex items-center justify-between">
                 <div>Добавить короны для скидки</div>
-                <div>1 USDT - {crownsPerUsdt} 👑</div>
+                <div className="flex items-center gap-1">1 USDT - {crownsPerUsdt} <CrownIcon /></div>
               </div>
               <div className="mt-2 flex items-center gap-2">
                 <input type="range" min={0} max={maxCrowns} value={crowns} onChange={e => setCrowns(Number(e.target.value))} className="w-full" />
@@ -65,14 +67,14 @@ export default function PurchaseModal() {
             <div className="grid grid-cols-2 gap-3">
               <div className="rounded-xl card px-3 py-3">
                 <div className="text-xs text-white/60">Скидка коронами</div>
-                <div className="text-sm mt-1">{crowns} 👑 = {discount.toFixed(0)} USDT</div>
+                <div className="text-sm mt-1 flex items-center gap-1">{crowns} <CrownIcon /> = {discount.toFixed(0)} USDT</div>
               </div>
               <div className="rounded-xl card px-3 py-3">
                 <div className="text-xs text-white/60">Сумма к оплате</div>
                 <div className="text-sm mt-1">{total.toFixed(0)} USDT</div>
               </div>
             </div>
-            <button className="w-full h-12 rounded-xl primary">Оплатить {total.toFixed(0)} USDT</button>
+            <PayButton amount={total.toFixed(0)} />
           </div>
         </div>
       )}

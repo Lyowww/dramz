@@ -1,19 +1,12 @@
 'use client'
 
-import BottomNav from '../components/BottomNav'
-import Logo from '../components/Logo'
 import { useSelector } from 'react-redux'
 import { RootState } from '../state/store'
 
 export default function ProfilePage() {
   const user = useSelector((s: RootState) => s.auth.user)
   return (
-    <div className="app-frame bg-app">
-      <main className="min-h-screen w-full pb-24">
-        <header className="safe-top px-4 pt-4 flex items-center justify-between">
-          <Logo />
-          <button className="w-9 h-9 rounded-full bg-white/10">⚙️</button>
-        </header>
+    <main className="w-full pb-24">
         <section className="px-4 mt-6">
           <div className="rounded-2xl card p-4">
             <div className="text-sm text-white/70">Пользователь</div>
@@ -22,8 +15,6 @@ export default function ProfilePage() {
           </div>
         </section>
       </main>
-      <BottomNav />
-    </div>
   )
 }
 

@@ -1,21 +1,15 @@
 'use client'
 
-import BottomNav from '../components/BottomNav'
-import Logo from '../components/Logo'
 import { rewardBalance, tasks } from '../data/rewards'
+import CrownIcon from '../components/CrownIcon'
 
 export default function RewardsPage() {
   return (
-    <div className="app-frame bg-app">
-      <main className="min-h-screen w-full pb-24">
-        <header className="safe-top px-4 pt-4 flex items-center justify-between">
-          <Logo />
-          <button className="w-9 h-9 rounded-full bg-white/10">?</button>
-        </header>
+    <main className="w-full pb-24">
         <section className="px-4 mt-4">
           <div className="rounded-2xl card p-4 flex items-center justify-between">
             <div className="text-white/80 text-sm">Баланс корон</div>
-            <div className="text-lg font-semibold">{rewardBalance} 👑</div>
+            <div className="text-lg font-semibold flex items-center gap-1">{rewardBalance} <CrownIcon /></div>
           </div>
         </section>
         <section className="px-4 mt-4">
@@ -28,7 +22,7 @@ export default function RewardsPage() {
                     <div className="text-sm font-medium">{t.title}</div>
                     <div className="text-xs text-white/70">{t.description}</div>
                   </div>
-                  <div className="text-sm whitespace-nowrap">{t.crowns} 👑</div>
+                  <div className="text-sm whitespace-nowrap flex items-center gap-1">{t.crowns} <CrownIcon /></div>
                 </div>
                 <div className="mt-2 flex items-center justify-between">
                   <div className="text-[11px] text-white/50">{t.expiresIn || ''}</div>
@@ -39,8 +33,6 @@ export default function RewardsPage() {
           </div>
         </section>
       </main>
-      <BottomNav />
-    </div>
   )
 }
 

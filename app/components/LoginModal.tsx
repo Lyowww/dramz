@@ -7,12 +7,13 @@ import { RootState } from '../state/store'
 import { closeModal } from '../state/slices/ui'
 
 function ActionButton({ children, onClick }: { children: React.ReactNode, onClick: () => void }) {
-  return <button onClick={onClick} className="w-full h-12 rounded-xl bg-[#7c3aed] text-white font-medium">{children}</button>
+  return <button onClick={onClick} className="w-full h-12 rounded-xl primary text-white font-medium">{children}</button>
 }
 
 export default function LoginModal() {
   const modalOpen = useSelector((s: RootState) => s.ui.modal === 'login')
   const user = useSelector((s: RootState) => s.auth.user)
+  const accessToken = useSelector((s: RootState) => s.auth.accessToken)
   const dispatch = useDispatch()
   const [isTelegram, setIsTelegram] = useState(false)
 
@@ -25,6 +26,12 @@ export default function LoginModal() {
       dispatch(closeModal())
     }
   }, [dispatch])
+
+  useEffect(() => {
+    if (user && accessToken) {
+      dispatch(closeModal())
+    }
+  }, [user, accessToken, dispatch])
 
   const doMock = () => {
     window.location.href = `/api/tg-auth?mock=1`
@@ -40,10 +47,12 @@ export default function LoginModal() {
   }
 
   return (
-    <Modal open={modalOpen && !user && !isTelegram} onClose={() => {}} title="Войти через Telegram">
+    <Modal open={modalOpen && !user && !accessToken && !isTelegram} onClose={() => {}} title="Войти через Telegram">
       <div className="space-y-3">
         <ActionButton onClick={doWidget}>Войти через Telegram</ActionButton>
-        <ActionButton onClick={doMock}>Продолжить как демонстрация</ActionButton>
+        {process.env.NODE_ENV === 'development' && (
+          <ActionButton onClick={doMock}>Продолжить как демонстрация</ActionButton>
+        )}
       </div>
     </Modal>
   )

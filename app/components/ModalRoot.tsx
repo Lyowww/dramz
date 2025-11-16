@@ -7,6 +7,7 @@ import FaqModal from './FaqModal'
 import PurchaseModal from './PurchaseModal'
 import InfoModal from './InfoModal'
 import RepostModal from './RepostModal'
+import AllSeriesModal from './AllSeriesModal'
 
 export default function ModalRoot() {
   const modal = useSelector((s: RootState) => s.ui.modal)
@@ -15,6 +16,7 @@ export default function ModalRoot() {
   if (modal === 'purchase') return <PurchaseModal />
   if (modal === 'info') return <InfoModal />
   if (modal === 'repost') return <RepostModal />
+  if (modal === 'allSeries') return <AllSeriesModal />
   return null
 }
 

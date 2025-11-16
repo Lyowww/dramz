@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export type ModalName = 'faq' | 'purchase' | 'info' | 'repost' | 'login'
+export type ModalName = 'faq' | 'purchase' | 'info' | 'repost' | 'login' | 'allSeries'
 
 type UIState = {
   modal: ModalName | null

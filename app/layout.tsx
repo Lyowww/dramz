@@ -6,6 +6,7 @@ import TelegramInit from "./telegram-init";
 import Providers from "./providers";
 import { cookies } from "next/headers";
 import ModalRoot from "./components/ModalRoot";
+import PageLayout from "./components/PageLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,8 +35,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = cookies()
-  const tgCookie = (await cookieStore).get('tgUser') || null
+  const cookieStore = await cookies()
+  const tgCookie = cookieStore.get('tgUser') || null
   const initialUser = tgCookie ? JSON.parse(tgCookie.value) : null
   return (
     <html lang="en">
@@ -45,7 +46,9 @@ export default async function RootLayout({
         <Script src="https://telegram.org/js/telegram-web-app.js" strategy="afterInteractive" />
         <TelegramInit />
         <Providers initialUser={initialUser}>
-          {children}
+          <PageLayout>
+            {children}
+          </PageLayout>
           <ModalRoot />
         </Providers>
       </body>

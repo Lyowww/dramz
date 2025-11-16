@@ -1,0 +1,44 @@
+import { apiFetch } from './client'
+import type {
+  CrownExchangeRate,
+  GetTokenRequest,
+  GetTokenResponse,
+  PurchaseCrownsRequest,
+  PurchaseCrownsResponse,
+  UserBalance,
+  UserProfile
+} from '@/types/api'
+
+export async function getAccessToken(body: GetTokenRequest) {
+  return apiFetch<GetTokenResponse>('/user/token', {
+    method: 'POST',
+    body: JSON.stringify(body)
+  })
+}
+
+export async function getUserBalance(token: string) {
+  return apiFetch<UserBalance>('/user/balance', {
+    method: 'GET'
+  }, { token })
+}
+
+export async function getUserProfile(token: string) {
+  return apiFetch<UserProfile>('/user/profile', {
+    method: 'GET'
+  }, { token })
+}
+
+export async function getCrownExchangeRate() {
+  return apiFetch<CrownExchangeRate>('/user/crowns/exchange-rate', {
+    method: 'GET'
+  })
+}
+
+export async function purchaseCrowns(token: string, body: PurchaseCrownsRequest) {
+  return apiFetch<PurchaseCrownsResponse>('/user/crowns/purchase', {
+    method: 'POST',
+    body: JSON.stringify(body)
+  }, { token })
+}
+
+

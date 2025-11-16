@@ -1,65 +1,69 @@
-import Image from "next/image";
+'use client'
+
+import { useDispatch } from 'react-redux'
+import BottomNav from './components/BottomNav'
+import Logo from './components/Logo'
+import { openModal } from './state/slices/ui'
+import { useSeriesList } from '@/hooks/useSeriesList'
+import { API_BASE_URL } from '@/lib/api/client'
 
 export default function Home() {
+  const dispatch = useDispatch()
+  const { data, loading, error } = useSeriesList()
+  const show = data && data.length > 0 ? data[0] : null
+
+  const openFaq = () => dispatch(openModal({ name: 'faq' }))
+  const openBuy = () => {
+    if (!show) return
+    dispatch(openModal({ name: 'purchase', data: { seriesId: show._id, show } }))
+  }
+
+  const imageSrc = show ? `${API_BASE_URL}/${show.coverImage}` : '/window.svg'
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className="app-frame bg-app">
+      <main className="min-h-screen w-full pb-24">
+        <header className="safe-top px-4 pt-4 flex items-center justify-between">
+          <Logo />
+          <button onClick={openFaq} className="w-9 h-9 rounded-full bg-white/10">?</button>
+        </header>
+
+        <section className="px-4 mt-6">
+          {loading && (
+            <div className="space-y-4">
+              <div className="rounded-3xl overflow-hidden relative bg-white/10 aspect-[3/4] animate-pulse" />
+              <div className="h-6 bg-white/10 rounded-xl w-2/3 mx-auto animate-pulse" />
+              <div className="mt-3 space-y-3">
+                <div className="w-full h-12 rounded-2xl bg-white/10 animate-pulse" />
+                <div className="w-full h-12 rounded-2xl bg-white/10 animate-pulse" />
+              </div>
+            </div>
+          )}
+          {!loading && error && (
+            <div className="rounded-2xl card px-4 py-3 text-sm text-red-300 text-center">
+              Не удалось загрузить сериал. Попробуйте позже.
+            </div>
+          )}
+          {!loading && !error && show && (
+            <>
+              <div className="rounded-3xl overflow-hidden relative">
+                <img src={imageSrc} alt={show.title} className="w-full aspect-[3/4] object-cover" />
+              </div>
+              <div className="text-center mt-4 text-xl font-semibold">{show.title}</div>
+              <div className="mt-3 space-y-3">
+                <button className="w-full h-12 rounded-2xl bg-white/10 text-white">Смотреть первые 10 серий</button>
+                <button onClick={openBuy} className="w-full h-12 rounded-2xl primary">Купить сразу все серии 👑</button>
+              </div>
+            </>
+          )}
+          {!loading && !error && !show && (
+            <div className="rounded-2xl card px-4 py-3 text-sm text-white/80 text-center">
+              Сериалы пока недоступны
+            </div>
+          )}
+        </section>
       </main>
+      <BottomNav />
     </div>
-  );
+  )
 }

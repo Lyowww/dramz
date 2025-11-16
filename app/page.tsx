@@ -123,7 +123,7 @@ export default function Home() {
           )}
           {!loading && !error && show && (
             <>
-              <div className='h-[50vh]' />
+              <div className='h-[45vh]' />
               {shows.length > 1 && (
                 <div className="flex justify-center gap-2 mb-4">
                   {shows.map((_, index) => (

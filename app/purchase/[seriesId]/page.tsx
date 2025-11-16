@@ -52,7 +52,7 @@ export default function PurchasePage() {
           />
         </>
       )}
-      <main className="w-full pb-24 px-4 py-6 space-y-4 relative z-10">
+      <main className="w-full px-4 py-6 space-y-4 relative z-10">
         <h1 className="text-2xl font-bold text-white mb-6">Покупка сериала</h1>
         {loading ? (
           <div className="space-y-4">

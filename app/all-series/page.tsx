@@ -25,9 +25,9 @@ export default function AllSeriesPage() {
     <div className="relative" style={backgroundStyle}>
       <div className="absolute inset-0 bg-black/60" style={{ zIndex: 1 }} />
       <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, #0D0920 0%, transparent 20%, transparent 80%, #0D0920 100%)', zIndex: 2 }} />
-      <main className="w-full pb-24 relative z-10">
+      <main className="w-full relative z-10">
 
-        <section className="px-4 mt-6">
+        <section className="px-4">
           <h1 className="text-2xl font-bold mb-6">Все новинки</h1>
           
           {loading && (

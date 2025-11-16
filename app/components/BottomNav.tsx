@@ -55,7 +55,7 @@ const items = [
 export default function BottomNav() {
   const pathname = usePathname()
   return (
-    <nav className="safe-bottom sticky bottom-0 z-10 bg-[#0f0b1d] border-t border-[#261f3f]">
+    <nav className="safe-bottom fixed bottom-0 left-0 right-0 w-full z-10 bg-[#0f0b1d] border-t border-[#261f3f] app-frame">
       <div className="grid grid-cols-3">
         {items.map(i => {
           const active = pathname === i.href

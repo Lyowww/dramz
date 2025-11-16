@@ -100,9 +100,9 @@ export default function Home() {
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(13, 9, 32, 0.98) 0%, rgba(13, 9, 32, 0.7) 20%, rgba(13, 9, 32, 0.2) 40%, transparent 60%)' }} />
         </div>
       )}
-      <main className="w-full pb-24 relative z-10">
+      <main className="w-full relative z-10">
 
-        <section className="px-4 mt-6">
+        <section className="px-4">
           {loading && (
             <div className="space-y-4">
               <div className="rounded-3xl overflow-hidden relative bg-white/10 aspect-[3/4] animate-pulse" />

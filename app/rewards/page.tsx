@@ -5,8 +5,8 @@ import CrownIcon from '../components/CrownIcon'
 
 export default function RewardsPage() {
   return (
-    <main className="w-full pb-24">
-        <section className="px-4 mt-4">
+    <main className="w-full">
+        <section className="px-4">
           <div className="rounded-2xl card p-4 flex items-center justify-between">
             <div className="text-white/80 text-sm">Баланс корон</div>
             <div className="text-lg font-semibold flex items-center gap-1">{rewardBalance} <CrownIcon /></div>

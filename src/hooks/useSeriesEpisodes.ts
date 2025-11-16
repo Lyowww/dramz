@@ -12,13 +12,14 @@ export function useSeriesEpisodes(seriesId: string | null) {
   useEffect(() => {
     if (!seriesId) return
 
+    const id = seriesId
     let active = true
 
     async function load() {
       setLoading(true)
       setError(null)
       try {
-        const result = await getSeriesEpisodes(seriesId)
+        const result = await getSeriesEpisodes(id)
         if (active) {
           setData(result)
         }

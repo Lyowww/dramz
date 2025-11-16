@@ -29,7 +29,10 @@ export async function GET(req: NextRequest) {
   const sp = url.searchParams
 
   if (sp.get('start') === 'widget') {
-    const bot = sp.get('bot') || process.env.NEXT_PUBLIC_TG_BOT || 'telegram'
+    const bot = sp.get('bot') || process.env.NEXT_PUBLIC_TG_BOT
+    if (!bot) {
+      return new NextResponse('Bot username not configured. Please set NEXT_PUBLIC_TG_BOT environment variable.', { status: 500 })
+    }
     const authUrl = new URL('/api/tg-auth', url.origin)
     const redirect = sp.get('redirect')
     if (redirect) authUrl.searchParams.set('redirect', redirect)

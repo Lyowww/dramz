@@ -8,7 +8,7 @@ type UIState = {
 }
 
 const initialState: UIState = {
-  modal: 'login',
+  modal: null,
   modalData: null
 }
 

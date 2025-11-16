@@ -86,4 +86,27 @@ export type PurchaseCrownsResponse = {
   purchase: unknown
 }
 
+export type RegisterUserRequest = {
+  telegramId: number
+  username: string | null
+  displayName: string | null
+}
+
+export type LikeSeriesResponse = {
+  isLiked: boolean
+  likesCount: number
+}
+
+export type BookmarkSeriesResponse = {
+  isBookmarked: boolean
+  bookmarksCount: number
+}
+
+export type SeriesStatusResponse = {
+  isLiked: boolean
+  isBookmarked: boolean
+  likesCount: number
+  bookmarksCount: number
+}
+
 

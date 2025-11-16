@@ -1,17 +1,13 @@
 'use client'
 
-import { useDispatch } from 'react-redux'
 import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { openModal } from './state/slices/ui'
 import { useSeriesList } from '@/hooks/useSeriesList'
-import { useSeriesEpisodes } from '@/hooks/useSeriesEpisodes'
 import { API_BASE_URL } from '@/lib/api/client'
-import CrownIcon from './components/CrownIcon'
+import PayButton from './components/PayButton'
 
 export default function Home() {
-  const dispatch = useDispatch()
   const router = useRouter()
   const { data, loading, error } = useSeriesList()
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -21,12 +17,9 @@ export default function Home() {
   const sliderRef = useRef<HTMLDivElement>(null)
   const touchStartX = useRef(0)
   const touchEndX = useRef(0)
-  const { data: episodesData } = useSeriesEpisodes(show?._id || null)
-  const isPurchased = episodesData?.isPurchased || false
-  console.log(isPurchased)
-  const openBuy = () => {
+  const openWatch = () => {
     if (!show) return
-    router.push(`/purchase/${show._id}`)
+    router.push(`/series/${show._id}`)
   }
 
   const scrollToSeriesList = () => {
@@ -114,16 +107,30 @@ export default function Home() {
             </div>
           )}
           {!loading && error && (
-            <div className="rounded-2xl card px-4 py-3 text-sm text-red-300 text-center space-y-2">
-              <div>Не удалось загрузить сериал. Попробуйте позже.</div>
-              {process.env.NODE_ENV === 'development' && (
-                <div className="text-xs text-red-400 mt-2 break-all">{error}</div>
-              )}
+            <div
+              style={{
+                background: 'linear-gradient(to top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 80%)',
+                borderRadius: '9px',
+                pointerEvents: 'none',
+                padding: '1px'
+              }}
+            >
+              <div
+                className="rounded-[8px] px-4 py-3 h-full w-full text-sm text-red-300 text-center space-y-2 relative overflow-hidden"
+                style={{
+                  backgroundColor: 'rgba(20, 16, 38, 0.9)'
+                }}
+              >
+                <div>Не удалось загрузить сериал. Попробуйте позже.</div>
+                {process.env.NODE_ENV === 'development' && (
+                  <div className="text-xs text-red-400 mt-2 break-all">{error}</div>
+                )}
+              </div>
             </div>
           )}
           {!loading && !error && show && (
             <>
-              <div className='h-[45vh]' />
+              <div className='h-[43vh]' />
               {shows.length > 1 && (
                 <div className="flex justify-center gap-2 mb-4">
                   {shows.map((_, index) => (
@@ -155,25 +162,14 @@ export default function Home() {
                 key={`buttons-${currentIndex}`}
                 className="mt-3 space-y-3 transition-all duration-500 ease-in-out animate-fade-in"
               >
-                {!isPurchased ? (
-                  <button
-                    onClick={openBuy}
-                    className="w-full h-12 rounded-2xl text-white font-medium flex items-center justify-center gap-2 px-6 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] animate-glow-pulse"
-                    style={{
-                      background: 'linear-gradient(135deg, #8F37FF 0%, #AC6BFF 100%)'
-                    }}
-                  >
-                    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M0.790849 10.6667C0.921569 10.6667 1.04466 10.6421 1.16013 10.5929C1.2756 10.5437 1.40087 10.4833 1.53595 10.4117L9.93467 6.23229C10.2135 6.08917 10.4052 5.94829 10.5098 5.80965C10.6144 5.671 10.6667 5.51223 10.6667 5.33334C10.6667 5.15444 10.6144 4.99567 10.5098 4.85703C10.4052 4.71838 10.2135 4.57974 9.93467 4.44109L1.53595 0.254927C1.39651 0.187841 1.26906 0.128581 1.15359 0.0771487C1.03812 0.0257162 0.915032 0 0.784317 0C0.544664 0 0.354031 0.0872118 0.212418 0.261635C0.0708061 0.436059 0 0.668624 0 0.95933L0.00653594 9.70733C0.00653594 9.99805 0.0773419 10.2306 0.218954 10.405C0.360566 10.5794 0.551198 10.6667 0.790849 10.6667Z" fill="white" fillOpacity="0.8" />
-                    </svg>
-                    <span>Смотреть</span>
-                  </button>
-                ) : (
-                  <>
-                    <button className="w-full h-12 rounded-2xl bg-white/10 text-white">Смотреть первые 10 серий</button>
-                    <button className="w-full h-12 rounded-2xl primary flex items-center justify-center gap-1">Купить сразу все серии <CrownIcon /></button>
-                  </>
-                )}
+                <PayButton
+                  onClick={openWatch}
+                  className="w-full h-12 rounded-full bg-white/10 text-white font-medium flex items-center justify-center gap-2 px-6 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]" amount={''}                >
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0.790849 10.6667C0.921569 10.6667 1.04466 10.6421 1.16013 10.5929C1.2756 10.5437 1.40087 10.4833 1.53595 10.4117L9.93467 6.23229C10.2135 6.08917 10.4052 5.94829 10.5098 5.80965C10.6144 5.671 10.6667 5.51223 10.6667 5.33334C10.6667 5.15444 10.6144 4.99567 10.5098 4.85703C10.4052 4.71838 10.2135 4.57974 9.93467 4.44109L1.53595 0.254927C1.39651 0.187841 1.26906 0.128581 1.15359 0.0771487C1.03812 0.0257162 0.915032 0 0.784317 0C0.544664 0 0.354031 0.0872118 0.212418 0.261635C0.0708061 0.436059 0 0.668624 0 0.95933L0.00653594 9.70733C0.00653594 9.99805 0.0773419 10.2306 0.218954 10.405C0.360566 10.5794 0.551198 10.6667 0.790849 10.6667Z" fill="white" fillOpacity="0.8" />
+                  </svg>
+                  <span>Смотреть</span>
+                </PayButton>
                 <button
                   onClick={scrollToSeriesList}
                   className="w-full flex justify-center"
@@ -189,8 +185,22 @@ export default function Home() {
             </>
           )}
           {!loading && !error && !show && (
-            <div className="rounded-2xl card px-4 py-3 text-sm text-white/80 text-center">
-              Сериалы пока недоступны
+            <div
+              style={{
+                background: 'linear-gradient(to top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 80%)',
+                borderRadius: '9px',
+                pointerEvents: 'none',
+                padding: '1px'
+              }}
+            >
+              <div
+                className="rounded-[8px] px-4 py-3 h-full w-full text-sm text-white/80 text-center relative overflow-hidden"
+                style={{
+                  backgroundColor: 'rgba(20, 16, 38, 0.9)'
+                }}
+              >
+                Сериалы пока недоступны
+              </div>
             </div>
           )}
         </section>
@@ -227,7 +237,7 @@ export default function Home() {
                     }}
                   >
                     <div
-                      onClick={() => router.push(`/purchase/${series._id}`)}
+                      onClick={() => router.push(`/series/${series._id}`)}
                       className="cursor-pointer active:scale-95 transition-transform"
                     >
                       <img
@@ -244,8 +254,22 @@ export default function Home() {
           ) : (
             !loading && (
               <div className="px-4">
-                <div className="rounded-2xl card px-4 py-3 text-sm text-white/80 text-center">
-                  Сериалы пока недоступны
+                <div
+                  style={{
+                    background: 'linear-gradient(to top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 80%)',
+                    borderRadius: '9px',
+                    pointerEvents: 'none',
+                    padding: '1px'
+                  }}
+                >
+                  <div
+                    className="rounded-[8px] px-4 py-3 h-full w-full text-sm text-white/80 text-center relative overflow-hidden"
+                    style={{
+                      backgroundColor: 'rgba(20, 16, 38, 0.9)'
+                    }}
+                  >
+                    Сериалы пока недоступны
+                  </div>
                 </div>
               </div>
             )

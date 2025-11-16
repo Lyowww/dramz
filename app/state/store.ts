@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import auth from './slices/auth'
 import ui from './slices/ui'
+import language from './slices/language'
 
 export const makeStore = () =>
   configureStore({
-    reducer: { auth, ui }
+    reducer: { auth, ui, language }
   })
 
 export type AppStore = ReturnType<typeof makeStore>

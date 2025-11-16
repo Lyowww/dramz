@@ -5,6 +5,7 @@ import { makeStore, AppStore } from './state/store'
 import { useRef, useEffect } from 'react'
 import { setUser, setAccessToken, setApiUser, TelegramUser } from './state/slices/auth'
 import { closeModal, openModal } from './state/slices/ui'
+import { initializeLanguage } from './state/slices/language'
 import { getAccessToken } from '@/lib/api/user'
 
 function getCookie(name: string): string | null {
@@ -117,6 +118,7 @@ export default function Providers({ initialUser, children }: { initialUser?: Tel
     if (storedToken) {
       storeRef.current.dispatch(setAccessToken(storedToken))
     }
+    storeRef.current.dispatch(initializeLanguage())
   }, [])
 
   if (!storeRef.current) return null

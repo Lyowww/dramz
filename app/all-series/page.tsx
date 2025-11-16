@@ -1,17 +1,16 @@
 'use client'
 
-import { useDispatch } from 'react-redux'
-import { openModal } from '../state/slices/ui'
+import { useRouter } from 'next/navigation'
 import { useSeriesList } from '@/hooks/useSeriesList'
 import { API_BASE_URL } from '@/lib/api/client'
 
 export default function AllSeriesPage() {
-  const dispatch = useDispatch()
+  const router = useRouter()
   const { data, loading, error } = useSeriesList()
   const series = data || []
 
   const handleSeriesClick = (series: any) => {
-    dispatch(openModal({ name: 'purchase', data: { seriesId: series._id, show: series } }))
+    router.push(`/series/${series._id}`)
   }
 
   const backgroundStyle = {
@@ -42,8 +41,22 @@ export default function AllSeriesPage() {
           )}
 
           {!loading && error && (
-            <div className="rounded-2xl card px-4 py-3 text-sm text-red-300 text-center">
-              Не удалось загрузить сериалы
+            <div
+              style={{
+                background: 'linear-gradient(to top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 80%)',
+                borderRadius: '9px',
+                pointerEvents: 'none',
+                padding: '1px'
+              }}
+            >
+              <div
+                className="rounded-[8px] px-4 py-3 h-full w-full text-sm text-red-300 text-center relative overflow-hidden"
+                style={{
+                  backgroundColor: 'rgba(20, 16, 38, 0.9)'
+                }}
+              >
+                Не удалось загрузить сериалы
+              </div>
             </div>
           )}
 
@@ -67,8 +80,22 @@ export default function AllSeriesPage() {
           )}
 
           {!loading && !error && series.length === 0 && (
-            <div className="rounded-2xl card px-4 py-3 text-sm text-white/80 text-center">
-              Сериалы пока недоступны
+            <div
+              style={{
+                background: 'linear-gradient(to top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 80%)',
+                borderRadius: '9px',
+                pointerEvents: 'none',
+                padding: '1px'
+              }}
+            >
+              <div
+                className="rounded-[8px] px-4 py-3 h-full w-full text-sm text-white/80 text-center relative overflow-hidden"
+                style={{
+                  backgroundColor: 'rgba(20, 16, 38, 0.9)'
+                }}
+              >
+                Сериалы пока недоступны
+              </div>
             </div>
           )}
         </section>

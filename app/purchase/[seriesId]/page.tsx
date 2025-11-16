@@ -56,14 +56,42 @@ export default function PurchasePage() {
         <h1 className="text-2xl font-bold text-white mb-6">Покупка сериала</h1>
         {loading ? (
           <div className="space-y-4">
-            <div className="rounded-xl card px-3 py-3 animate-pulse">
-              <div className="h-4 bg-white/10 rounded w-1/3 mb-2" />
-              <div className="h-6 bg-white/10 rounded w-2/3" />
+            <div
+              style={{
+                background: 'linear-gradient(to top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 80%)',
+                borderRadius: '9px',
+                pointerEvents: 'none',
+                padding: '1px'
+              }}
+            >
+              <div
+                className="rounded-[8px] px-3 py-3 h-full w-full relative overflow-hidden animate-pulse"
+                style={{
+                  backgroundColor: 'rgba(20, 16, 38, 0.9)'
+                }}
+              >
+                <div className="h-4 bg-white/10 rounded w-1/3 mb-2" />
+                <div className="h-6 bg-white/10 rounded w-2/3" />
+              </div>
             </div>
           </div>
         ) : !show ? (
-          <div className="rounded-2xl card px-4 py-3 text-sm text-red-300 text-center">
-            Сериал не найден
+          <div
+            style={{
+              background: 'linear-gradient(to top, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 80%)',
+              borderRadius: '9px',
+              pointerEvents: 'none',
+              padding: '1px'
+            }}
+          >
+            <div
+              className="rounded-[8px] px-4 py-3 h-full w-full text-sm text-red-300 text-center relative overflow-hidden"
+              style={{
+                backgroundColor: 'rgba(20, 16, 38, 0.9)'
+              }}
+            >
+              Сериал не найден
+            </div>
           </div>
         ) : (
           <div className="space-y-4">

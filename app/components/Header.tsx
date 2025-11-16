@@ -13,23 +13,29 @@ export default function Header() {
   const openFaq = () => dispatch(openModal({ name: 'faq' }))
 
   const isHome = pathname === '/'
-  const showBackButton = !isHome
+  const isRewards = pathname === '/rewards'
+  const isProfile = pathname === '/profile'
+  const showBackButton = !isHome && !isRewards && !isProfile
 
   return (
-    <header className="safe-top px-4 pt-4 flex items-center justify-between z-50 fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[480px]">
-      <button 
-        onClick={() => router.back()} 
-        className="w-9 h-9 flex items-center justify-center"
-        style={{
-          backgroundColor: 'rgba(255, 255, 255, 0.05)',
-          padding: '8px',
-          borderRadius: '12px'
-        }}
-      >
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12.5 15L7.5 10L12.5 5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
+    <header className="safe-top py-4 px-4 pt-4 flex items-center justify-between z-50 fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[480px]">
+      {showBackButton ? (
+        <button 
+          onClick={() => router.back()} 
+          className="w-9 h-9 flex items-center justify-center"
+          style={{
+            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+            padding: '8px',
+            borderRadius: '12px'
+          }}
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5 15L7.5 10L12.5 5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+      ) : (
+        <div className="w-9 h-9" />
+      )}
       
       <div className='w-full flex justify-center items-center'>
         <Logo />

@@ -3,18 +3,21 @@
 import Modal from './Modal'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../state/store'
-import { closeModal, openModal } from '../state/slices/ui'
+import { closeModal } from '../state/slices/ui'
+import { useRouter } from 'next/navigation'
 import { useSeriesList } from '@/hooks/useSeriesList'
 import { API_BASE_URL } from '@/lib/api/client'
 
 export default function AllSeriesModal() {
   const open = useSelector((s: RootState) => s.ui.modal === 'allSeries')
   const dispatch = useDispatch()
+  const router = useRouter()
   const { data, loading, error } = useSeriesList()
   const series = data || []
 
   const handleSeriesClick = (series: any) => {
-    dispatch(openModal({ name: 'purchase', data: { seriesId: series._id, show: series } }))
+    dispatch(closeModal())
+    router.push(`/series/${series._id}`)
   }
 
   return (

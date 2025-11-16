@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useTranslation } from '../hooks/useTranslation'
 
 const HomeIcon = ({ active }: { active: boolean }) => {
   const opacity = active ? '0.8' : '0.4'
@@ -46,14 +47,16 @@ const ProfileIcon = ({ active }: { active: boolean }) => {
   )
 }
 
-const items = [
-  { href: '/', label: 'Главная', icon: HomeIcon },
-  { href: '/rewards', label: 'Награды', icon: RewardsIcon },
-  { href: '/profile', label: 'Профиль', icon: ProfileIcon },
-]
-
 export default function BottomNav() {
   const pathname = usePathname()
+  const { t } = useTranslation()
+  
+  const items = [
+    { href: '/', label: t('common.home'), icon: HomeIcon },
+    { href: '/rewards', label: t('common.rewards'), icon: RewardsIcon },
+    { href: '/profile', label: t('common.profile'), icon: ProfileIcon },
+  ]
+  
   return (
     <nav className="safe-bottom fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-10 bg-[#0f0b1d] border-t border-[#261f3f]">
       <div className="grid grid-cols-3">

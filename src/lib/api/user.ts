@@ -5,6 +5,7 @@ import type {
   GetTokenResponse,
   PurchaseCrownsRequest,
   PurchaseCrownsResponse,
+  RegisterUserRequest,
   UserBalance,
   UserProfile
 } from '@/types/api'
@@ -41,4 +42,10 @@ export async function purchaseCrowns(token: string, body: PurchaseCrownsRequest)
   }, { token })
 }
 
+export async function registerUser(body: RegisterUserRequest) {
+  return apiFetch<void>('/user/register', {
+    method: 'POST',
+    body: JSON.stringify(body)
+  })
+}
 

@@ -22,7 +22,9 @@ export function useSeriesList() {
         }
       } catch (e) {
         if (active) {
-          setError(e instanceof Error ? e.message : 'Failed to load series')
+          const errorMessage = e instanceof Error ? e.message : 'Failed to load series'
+          console.error('Error loading series:', errorMessage, e)
+          setError(errorMessage)
         }
       } finally {
         if (active) {

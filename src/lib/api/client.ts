@@ -38,29 +38,36 @@ export async function apiFetch<T>(
     headers['Authorization'] = `Bearer ${config.token}`
   }
 
-  const res = await fetch(url, {
-    cache: 'no-store',
-    ...options,
-    headers
-  })
+  try {
+    const res = await fetch(url, {
+      cache: 'no-store',
+      ...options,
+      headers
+    })
 
-  if (!res.ok) {
-    let message = `Request failed with status ${res.status}`
-    try {
-      const data = await res.json() as { message?: string }
-      if (data && typeof data.message === 'string') {
-        message = data.message
+    if (!res.ok) {
+      let message = `Request failed with status ${res.status}`
+      try {
+        const data = await res.json() as { message?: string }
+        if (data && typeof data.message === 'string') {
+          message = data.message
+        }
+      } catch {
       }
-    } catch {
+      throw new Error(message)
     }
-    throw new Error(message)
-  }
 
-  if (res.status === 204) {
-    return null as unknown as T
-  }
+    if (res.status === 204) {
+      return null as unknown as T
+    }
 
-  return res.json() as Promise<T>
+    return res.json() as Promise<T>
+  } catch (error) {
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      throw new Error(`Network error: Unable to connect to ${url}. Check your internet connection and API endpoint.`)
+    }
+    throw error
+  }
 }
 
 

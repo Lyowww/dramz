@@ -40,8 +40,11 @@ export default function Home() {
             </div>
           )}
           {!loading && error && (
-            <div className="rounded-2xl card px-4 py-3 text-sm text-red-300 text-center">
-              Не удалось загрузить сериал. Попробуйте позже.
+            <div className="rounded-2xl card px-4 py-3 text-sm text-red-300 text-center space-y-2">
+              <div>Не удалось загрузить сериал. Попробуйте позже.</div>
+              {process.env.NODE_ENV === 'development' && (
+                <div className="text-xs text-red-400 mt-2 break-all">{error}</div>
+              )}
             </div>
           )}
           {!loading && !error && show && (
